@@ -17,10 +17,10 @@ public class Task implements Serializable, Cloneable {
     private boolean active;
 
     private static final Logger log = Logger.getLogger(Task.class.getName());
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public static SimpleDateFormat getDateFormat(){
-        return sdf;
+        return dateFormat;
     }
     public Task(String title, Date time){
         if (time.getTime() < 0) {
@@ -121,10 +121,10 @@ public class Task implements Serializable, Cloneable {
     //duplicate methods for TableView which sets column
     // value by single method and doesn't allow passing parameters
     public String getFormattedDateStart(){
-        return sdf.format(start);
+        return dateFormat.format(start);
     }
     public String getFormattedDateEnd(){
-        return sdf.format(end);
+        return dateFormat.format(end);
     }
     public String getFormattedRepeated(){
         if (isRepeated()){

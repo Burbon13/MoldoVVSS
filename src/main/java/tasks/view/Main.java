@@ -27,13 +27,19 @@ public class Main extends Application {
     private ArrayTaskList savedTasksList = new ArrayTaskList();
 
     private static ClassLoader classLoader = Main.class.getClassLoader();
-    public static File savedTasksFile = new File(classLoader.getResource("data/tasks.txt").getFile());
+    public static File savedTasksFile;
 
     private TasksService service = new TasksService(savedTasksList);//savedTasksList);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        try {
+            savedTasksFile = new File(classLoader.getResource("data/tasks.txt").getFile());
+        } catch (NullPointerException e) {
+            log.error("invalid file");
+            System.exit(0);
+        }
 
         log.info("saved data reading");
         if (savedTasksFile.length() != 0) {
@@ -43,7 +49,7 @@ public class Main extends Application {
             log.info("application start");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = loader.load();//loader.load(this.getClass().getResource("/fxml/main.fxml"));
-            Controller ctrl= loader.getController();
+            Controller ctrl = loader.getController();
             service = new TasksService(savedTasksList);
 
             ctrl.setService(service);
@@ -52,14 +58,13 @@ public class Main extends Application {
             primaryStage.setMinWidth(defaultWidth);
             primaryStage.setMinHeight(defaultHeight);
             primaryStage.show();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             log.error("error reading main.fxml");
         }
         primaryStage.setOnCloseRequest(we -> {
-                System.exit(0);
-            });
+            System.exit(0);
+        });
         new Notificator(FXCollections.observableArrayList(service.getObservableList())).start();
     }
 

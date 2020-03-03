@@ -1,6 +1,8 @@
 package tasks.services;
 
 
+import org.apache.log4j.Logger;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -12,6 +14,7 @@ public class DateService {
     public static final int SECONDS_IN_MINUTE = 60;
     public static final int MINUTES_IN_HOUR = 60;
     public static final int HOURS_IN_A_DAY = 24;
+    private static final Logger log = Logger.getLogger(DateService.class.getName());
 
     private TasksService service;
 
@@ -23,10 +26,14 @@ public class DateService {
 
     }
     public Date getDateValueFromLocalDate(LocalDate localDate){//for getting from DatePicker
+        if (localDate == null || localDate.equals(""))
+            throw new NullPointerException("date is invalid");
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         return Date.from(instant);
     }
     public Date getDateMergedWithTime(String time, Date noTimeDate) {//to retrieve Date object from both DatePicker and time field
+        if (!time.matches("[0-9][0-9]?:[0-9][0-9]") || time.matches(""))
+            throw new IllegalArgumentException("minutes or seconds are invalid");
         String[] units = time.split(":");
         int hour = Integer.parseInt(units[0]);
         int minute = Integer.parseInt(units[1]);
