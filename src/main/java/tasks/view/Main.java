@@ -27,13 +27,20 @@ public class Main extends Application {
     private ArrayTaskList savedTasksList = new ArrayTaskList();
 
     private static ClassLoader classLoader = Main.class.getClassLoader();
-    public static File savedTasksFile = new File(classLoader.getResource("data/tasks.txt").getFile());
+    public static File savedTasksFile;
 
     private TasksService service = new TasksService(savedTasksList);//savedTasksList);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
+
+        try {
+            savedTasksFile = new File(classLoader.getResource("data/tasks.txt").getFile());
+        } catch (NullPointerException e) {
+            log.error("invalid file");
+            System.exit(0);
+        }
+
         log.info("saved data reading");
         if (savedTasksFile.length() != 0) {
             TaskIO.readBinary(savedTasksList, savedTasksFile);
