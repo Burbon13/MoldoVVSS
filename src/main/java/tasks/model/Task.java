@@ -23,6 +23,10 @@ public class Task implements Serializable, Cloneable {
         return dateFormat;
     }
     public Task(String title, Date time){
+        if (time == null){
+            log.error("time is null");
+            throw new NullPointerException("Time cannot be null");
+        }
         if (time.getTime() < 0) {
             log.error("time below bound");
             throw new IllegalArgumentException("Time cannot be negative");
@@ -33,6 +37,10 @@ public class Task implements Serializable, Cloneable {
         this.end = time;
     }
     public Task(String title, Date start, Date end, int interval){
+        if (start == null || end == null){
+            log.error("start or end cannot be null");
+            throw new NullPointerException("Start or end cannot be null");
+        }
         if (start.getTime() < 0 || end.getTime() < 0) {
             log.error("time below bound");
             throw new IllegalArgumentException("Time cannot be negative");
