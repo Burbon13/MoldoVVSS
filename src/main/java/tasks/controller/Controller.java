@@ -74,7 +74,7 @@ public class Controller {
     public void initialize() {
         log.info("Main controller initializing");
         columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        columnTime.setCellValueFactory(new PropertyValueFactory<>("formattedDateStart"));
+        columnTime.setCellValueFactory(new PropertyValueFactory<>("formattedDateStartTime"));
         columnRepeated.setCellValueFactory(new PropertyValueFactory<>("formattedRepeated"));
     }
 
