@@ -104,6 +104,11 @@ public class NewEditController {
     }
 
     private void initEditWindow(String title){
+        if (currentTask == null){
+            log.error("currentTask is null");
+            throw new NullPointerException("currentTask is null");
+        }
+
         currentStage.setTitle(title);
         fieldTitle.setText(currentTask.getTitle());
         datePickerStart.setValue(dateService.getLocalDateValueFromDate(currentTask.getStartTime()));

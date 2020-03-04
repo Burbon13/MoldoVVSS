@@ -103,6 +103,8 @@ public class Controller {
             editNewStage.show();
         } catch (IOException e) {
             log.error("Error loading new-edit-task.fxml");
+        } catch (NullPointerException e) {
+            log.error(e.getMessage());
         }
     }
 
