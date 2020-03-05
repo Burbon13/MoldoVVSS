@@ -156,7 +156,7 @@ public class Controller {
     @FXML
     public void resetFilteredTasks() {
         tasks.setItems(tasksList);
-
+        updateCountLabel(tasksList);
     }
 
 }
