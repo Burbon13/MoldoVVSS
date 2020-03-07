@@ -23,6 +23,9 @@ public class TaskIO {
 
     private static final Logger log = Logger.getLogger(TaskIO.class.getName());
 
+    private TaskIO() {
+    }
+
     public static void write(TaskList tasks, OutputStream out) throws IOException {
         try (DataOutputStream dataOutputStream = new DataOutputStream(out)) {
             dataOutputStream.writeInt(tasks.size());

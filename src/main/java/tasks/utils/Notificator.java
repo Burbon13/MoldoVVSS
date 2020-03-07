@@ -25,7 +25,6 @@ public class Notificator extends Thread {
     public void run() {
         Date currentDate = new Date();
         while (true) {
-
             for (Task t : tasksList) {
                 if (t.isActive()) {
                     if (t.isRepeated() && t.getEndTime().after(currentDate)) {
@@ -49,9 +48,9 @@ public class Notificator extends Thread {
             }
             try {
                 Thread.sleep(MILLISECONDS_IN_SEC * (long) SECONDS_IN_MIN);
-
             } catch (InterruptedException e) {
                 log.error("thread interrupted exception");
+                Thread.currentThread().interrupt();
             }
             currentDate = new Date();
         }

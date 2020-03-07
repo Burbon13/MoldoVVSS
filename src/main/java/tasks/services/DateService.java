@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class DateService {
     public static final int SECONDS_IN_MINUTE = 60;
@@ -39,7 +38,7 @@ public class DateService {
         int minute = Integer.parseInt(units[1]);
         if (hour > HOURS_IN_A_DAY || minute > MINUTES_IN_HOUR)
             throw new IllegalArgumentException("time unit exceeds bounds");
-        Calendar calendar = GregorianCalendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.setTime(noTimeDate);
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
@@ -47,7 +46,7 @@ public class DateService {
     }
 
     public String getTimeOfTheDayFromDate(Date date) {//to set in detached time field
-        Calendar calendar = GregorianCalendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minutes = calendar.get(Calendar.MINUTE);
