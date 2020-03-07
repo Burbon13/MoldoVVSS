@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TaskIO {
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS]");
+    private static final String SIMPLE_DATE_FORMAT = "[yyyy-MM-dd HH:mm:ss.SSS]";
     private static final String[] TIME_ENTITY = {" day", " hour", " minute", " second"};
     private static final int SECONDS_IN_DAY = 86400;
     private static final int SECONDS_IN_HOUR = 3600;
@@ -205,7 +205,7 @@ public class TaskIO {
         }
         trimmedDate = line.substring(start, end + 1);
         try {
-            date = simpleDateFormat.parse(trimmedDate);
+            date = new SimpleDateFormat(SIMPLE_DATE_FORMAT).parse(trimmedDate);
         } catch (ParseException e) {
             log.error("date parse exception");
         }
@@ -231,15 +231,15 @@ public class TaskIO {
 
         if (task.isRepeated()) {
             result.append(" from ");
-            result.append(simpleDateFormat.format(task.getStartTime()));
+            result.append(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(task.getStartTime()));
             result.append(" to ");
-            result.append(simpleDateFormat.format(task.getEndTime()));
+            result.append(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(task.getEndTime()));
             result.append(" every ").append("[");
             result.append(getFormattedInterval(task.getRepeatInterval()));
             result.append("]");
         } else {
             result.append(" at ");
-            result.append(simpleDateFormat.format(task.getStartTime()));
+            result.append(new SimpleDateFormat(SIMPLE_DATE_FORMAT).format(task.getStartTime()));
         }
         if (!task.isActive()) result.append(" inactive");
         return result.toString().trim();
