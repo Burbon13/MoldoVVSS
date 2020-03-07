@@ -1,4 +1,4 @@
-package tasks.controller;
+package tasks.utils;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
