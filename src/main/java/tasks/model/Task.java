@@ -106,7 +106,7 @@ public class Task implements Serializable, Cloneable {
     }
 
     public boolean isRepeated() {
-        return !(this.interval == 0);
+        return this.interval != 0;
 
     }
 
