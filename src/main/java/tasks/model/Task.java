@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class Task implements Serializable, Cloneable {
+public class Task implements Serializable {
     private String title;
     private Date currentTime;
     private Date startTime;
@@ -17,10 +17,10 @@ public class Task implements Serializable, Cloneable {
     private boolean active;
 
     private static final Logger log = Logger.getLogger(Task.class.getName());
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final String SIMPLE_DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
     public static SimpleDateFormat getDateFormat() {
-        return dateFormat;
+        return new SimpleDateFormat(SIMPLE_DATE_FORMAT);
     }
 
     public Task(String title, Date currentTime) {
@@ -106,7 +106,7 @@ public class Task implements Serializable, Cloneable {
     }
 
     public boolean isRepeated() {
-        return !(this.interval == 0);
+        return this.interval != 0;
 
     }
 
@@ -136,11 +136,11 @@ public class Task implements Serializable, Cloneable {
     //duplicate methods for TableView which sets column
     // value by single method and doesn't allow passing parameters
     public String getFormattedDateStartTime() {
-        return dateFormat.format(startTime);
+        return getDateFormat().format(startTime);
     }
 
     public String getFormattedDateEndTime() {
-        return dateFormat.format(endTime);
+        return getDateFormat().format(endTime);
     }
 
     public String getFormattedRepeated() {
@@ -188,15 +188,6 @@ public class Task implements Serializable, Cloneable {
                 ", interval=" + interval +
                 ", active=" + active +
                 '}';
-    }
-
-    @Override
-    protected Task clone() throws CloneNotSupportedException {
-        Task task = (Task) super.clone();
-        task.currentTime = (Date) this.currentTime.clone();
-        task.startTime = (Date) this.startTime.clone();
-        task.endTime = (Date) this.endTime.clone();
-        return task;
     }
 }
 
