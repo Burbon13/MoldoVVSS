@@ -147,6 +147,7 @@ public class NewEditController {
 
         if (currentTask == null) {//no task was chosen -> add button was pressed
             tasksList.add(collectedFieldsTask);
+            service.add(collectedFieldsTask);
         } else {
             for (int i = 0; i < tasksList.size(); i++) {
                 if (currentTask.equals(tasksList.get(i))) {
