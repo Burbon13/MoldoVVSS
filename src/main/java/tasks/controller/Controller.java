@@ -18,6 +18,7 @@ import tasks.model.Task;
 import tasks.services.DateService;
 import tasks.utils.TaskIO;
 import tasks.services.TasksService;
+import tasks.utils.UtilsException;
 import tasks.view.Main;
 
 import java.io.IOException;
@@ -104,7 +105,7 @@ public class Controller {
             editNewStage.show();
         } catch (IOException e) {
             log.error("Error loading new-edit-task.fxml");
-        } catch (ModelException | SecurityException e) {
+        } catch (ModelException | SecurityException | UtilsException e) {
             log.error(e.getMessage());
         }
     }
@@ -144,7 +145,7 @@ public class Controller {
             ObservableList<Task> observableTasks = FXCollections.observableList((ArrayList) filtered);
             tasks.setItems(observableTasks);
             updateCountLabel(observableTasks);
-        } catch (ModelException | SecurityException e) {
+        } catch (ModelException | SecurityException | UtilsException e) {
             log.error(e.getMessage());
         }
     }

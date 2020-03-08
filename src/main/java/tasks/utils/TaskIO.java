@@ -246,7 +246,7 @@ public class TaskIO {
     }
 
     public static String getFormattedInterval(int interval) {
-        if (interval <= 0) throw new IllegalArgumentException("Interval <= 0");
+        if (interval <= 0) throw new UtilsException("Interval <= 0");
         StringBuilder sb = new StringBuilder();
 
         int days = interval / SECONDS_IN_DAY;
