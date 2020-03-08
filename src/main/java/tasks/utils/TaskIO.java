@@ -48,6 +48,7 @@ public class TaskIO {
         try (DataInputStream dataInputStream = new DataInputStream(in)) {
             int listLength = dataInputStream.readInt();
             for (int i = 0; i < listLength; i++) {
+                dataInputStream.readInt(); //Evrica
                 String title = dataInputStream.readUTF();
                 boolean isActive = dataInputStream.readBoolean();
                 int interval = dataInputStream.readInt();
@@ -67,6 +68,7 @@ public class TaskIO {
 
     public static void writeBinary(TaskList tasks, File file) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(file)) {
+            //System.out.println(tasks);
             write(tasks, fos);
         } catch (IOException e) {
             log.error(IO_ERROR_MESSAGE);
@@ -246,7 +248,7 @@ public class TaskIO {
     }
 
     public static String getFormattedInterval(int interval) {
-        if (interval <= 0) throw new IllegalArgumentException("Interval <= 0");
+        if (interval <= 0) throw new UtilsException("Interval <= 0");
         StringBuilder sb = new StringBuilder();
 
         int days = interval / SECONDS_IN_DAY;

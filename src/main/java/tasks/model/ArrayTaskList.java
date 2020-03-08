@@ -26,7 +26,7 @@ public class ArrayTaskList extends TaskList {
         public Task next() {
             if (!hasNext()) {
                 log.error("next iterator element doesn't exist");
-                throw new NoSuchElementException("No next element");
+                throw new ModelException("No next element");
             }
             lastCalled = cursor;
             return getTask(cursor++);
@@ -35,7 +35,7 @@ public class ArrayTaskList extends TaskList {
         @Override
         public void remove() {
             if (lastCalled == -1) {
-                throw new IllegalStateException();
+                throw new ModelException("Array is empty");
             }
             ArrayTaskList.this.remove(getTask(lastCalled));
             cursor = lastCalled;
@@ -55,7 +55,7 @@ public class ArrayTaskList extends TaskList {
 
     @Override
     public void add(Task task) {
-        if (task == null) throw new NullPointerException("Task shouldn't be null");
+        if (task == null) throw new ModelException("Task shouldn't be null");
         if (numberOfTasks == currentCapacity - 1) {
             currentCapacity = currentCapacity * 2;
             Task[] withAddedTask = new Task[currentCapacity];
@@ -93,7 +93,7 @@ public class ArrayTaskList extends TaskList {
     public Task getTask(int index) {
         if (index < 0 || index > size() - 1) {
             log.error("not existing index");
-            throw new IndexOutOfBoundsException("Index not found");
+            throw new ModelException("Index not found");
         }
 
 
