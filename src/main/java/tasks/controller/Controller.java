@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+import tasks.model.ModelException;
 import tasks.model.Task;
 import tasks.services.DateService;
 import tasks.utils.TaskIO;
@@ -103,7 +104,7 @@ public class Controller {
             editNewStage.show();
         } catch (IOException e) {
             log.error("Error loading new-edit-task.fxml");
-        } catch (NullPointerException e) {
+        } catch (ModelException | SecurityException e) {
             log.error(e.getMessage());
         }
     }
@@ -143,7 +144,7 @@ public class Controller {
             ObservableList<Task> observableTasks = FXCollections.observableList((ArrayList) filtered);
             tasks.setItems(observableTasks);
             updateCountLabel(observableTasks);
-        } catch (IllegalArgumentException | NullPointerException e) {
+        } catch (ModelException | SecurityException e) {
             log.error(e.getMessage());
         }
     }

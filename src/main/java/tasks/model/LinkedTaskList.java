@@ -28,7 +28,7 @@ public class LinkedTaskList extends TaskList {
         public Task next() {
             if (!hasNext()) {
                 log.error("next iterator element doesn't exist");
-                throw new NoSuchElementException("No next element");
+                throw new ModelException("No next element");
             }
             lastCalled = cursor;
             return getTask(cursor++);
@@ -37,7 +37,7 @@ public class LinkedTaskList extends TaskList {
         @Override
         public void remove() {
             if (lastCalled == -1) {
-                throw new IllegalStateException();
+                throw new ModelException("Array is empty");
             }
             LinkedTaskList.this.remove(getTask(lastCalled));
             cursor = lastCalled;
@@ -61,7 +61,7 @@ public class LinkedTaskList extends TaskList {
     public boolean remove(Task task) {
         if (isNull(task)) {
             log.error("removing task that doesn't exist");
-            throw new NullPointerException("Task is null");
+            throw new ModelException("Task is null");
         }
 
         Node cursor = last;
@@ -89,7 +89,7 @@ public class LinkedTaskList extends TaskList {
     public Task getTask(int index) {
         if (index < 0 || index > size() - 1) {
             log.error("index doesn't exist");
-            throw new IndexOutOfBoundsException("Index not found");
+            throw new ModelException("Index not found");
         }
         int stepsBack = size() - index - 1;
         Node current = last;

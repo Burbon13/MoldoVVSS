@@ -25,19 +25,19 @@ public class DateService {
 
     public Date getDateValueFromLocalDate(LocalDate localDate) {//for getting from DatePicker
         if (localDate == null)
-            throw new NullPointerException("date is invalid");
+            throw new ServiceException("date is invalid");
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         return Date.from(instant);
     }
 
     public Date getDateMergedWithTime(String time, Date noTimeDate) {//to retrieve Date object from both DatePicker and time field
         if (!time.matches("[0-9][0-9]?:[0-9][0-9]") || time.matches(""))
-            throw new IllegalArgumentException("minutes or seconds are invalid");
+            throw new ServiceException("minutes or seconds are invalid");
         String[] units = time.split(":");
         int hour = Integer.parseInt(units[0]);
         int minute = Integer.parseInt(units[1]);
         if (hour > HOURS_IN_A_DAY || minute > MINUTES_IN_HOUR)
-            throw new IllegalArgumentException("time unit exceeds bounds");
+            throw new ServiceException("time unit exceeds bounds");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(noTimeDate);
         calendar.set(Calendar.HOUR_OF_DAY, hour);
