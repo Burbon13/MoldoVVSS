@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import tasks.model.ModelException;
 import tasks.model.Task;
 import tasks.services.DateService;
+import tasks.services.ServiceException;
 import tasks.utils.TaskIO;
 import tasks.services.TasksService;
 import tasks.utils.UtilsException;
@@ -145,7 +146,7 @@ public class Controller {
             ObservableList<Task> observableTasks = FXCollections.observableList((ArrayList) filtered);
             tasks.setItems(observableTasks);
             updateCountLabel(observableTasks);
-        } catch (ModelException | SecurityException | UtilsException e) {
+        } catch (ModelException | SecurityException | UtilsException | ServiceException e) {
             log.error(e.getMessage());
         }
     }
