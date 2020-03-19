@@ -16,8 +16,17 @@ public class TasksService {
         this.tasks = tasks;
     }
 
-    public void add(Task task) {
+    public void add(String title, Date startDate, Date endDate, int interval, boolean isSelected) {
+        Task task;
+        if (isSelected)
+            task = new Task(title, startDate, endDate, interval);
+        else
+            task = new Task(title, startDate);
         tasks.add(task);
+    }
+
+    public void delete(Task task){
+        tasks.remove(task);
     }
 
 

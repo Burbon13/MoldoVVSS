@@ -109,13 +109,14 @@ public class Controller {
         } catch (ModelException | SecurityException | UtilsException e) {
             log.error(e.getMessage());
         }
-    }
 
+    }
     @FXML
     public void deleteTask() {
         Task toDelete = (Task) tasks.getSelectionModel().getSelectedItem();
         tasksList.remove(toDelete);
         TaskIO.rewriteFile(tasksList);
+        service.delete(toDelete);
     }
 
     @FXML
