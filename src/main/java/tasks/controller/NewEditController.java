@@ -18,6 +18,7 @@ import tasks.model.Task;
 import tasks.services.DateService;
 import tasks.utils.TaskIO;
 import tasks.services.TasksService;
+import tasks.utils.UtilsException;
 
 import java.io.IOException;
 import java.time.LocalDate;
