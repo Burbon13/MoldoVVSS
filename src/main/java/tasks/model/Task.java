@@ -24,6 +24,10 @@ public class Task implements Serializable {
     }
 
     public Task(String title, Date currentTime) {
+        if (title.length() > 255 || title.length() == 0) {
+            log.error("invalid title");
+            throw new ModelException("invalid title");
+        }
         if (currentTime == null) {
             log.error("currentTime is null");
             throw new ModelException("currentTime cannot be null");
@@ -39,6 +43,10 @@ public class Task implements Serializable {
     }
 
     public Task(String title, Date startTime, Date endTime, int interval) {
+        if (title.length() > 255 || title.length() == 0) {
+            log.error("invalid title");
+            throw new ModelException("invalid title");
+        }
         if (startTime == null || endTime == null) {
             log.error("startTime or endTime cannot be null");
             throw new ModelException("startTime or endTime cannot be null");
@@ -47,9 +55,9 @@ public class Task implements Serializable {
             log.error("time below bound");
             throw new ModelException("Time cannot be negative");
         }
-        if (interval < 1) {
-            log.error("interval < than 1");
-            throw new ModelException("interval should me > 1");
+        if (interval == 0) {
+            log.error("interval is 0");
+            throw new ModelException("interval should be >= 1");
         }
         this.title = title;
         this.startTime = startTime;

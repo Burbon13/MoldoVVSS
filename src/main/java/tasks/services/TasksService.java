@@ -2,13 +2,18 @@ package tasks.services;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.log4j.Logger;
+import tasks.controller.Controller;
 import tasks.model.ArrayTaskList;
+import tasks.model.ModelException;
 import tasks.model.Task;
 import tasks.model.TasksOperations;
 
 import java.util.Date;
 
 public class TasksService {
+
+    private static final Logger log = Logger.getLogger(TasksService.class.getName());
 
     private ArrayTaskList tasks;
 

@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+import tasks.model.ModelException;
 import tasks.model.Task;
 import tasks.services.DateService;
 import tasks.utils.TaskIO;
