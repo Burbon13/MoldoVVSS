@@ -43,7 +43,7 @@ public class Task implements Serializable {
     }
 
     public Task(String title, Date startTime, Date endTime, int interval) {
-        if (title.length() > 255 || title.length() == 0) {
+        if (title==null || title.length() > 255 || title.length() == 0) {
             log.error("invalid title");
             throw new ModelException("invalid title");
         }

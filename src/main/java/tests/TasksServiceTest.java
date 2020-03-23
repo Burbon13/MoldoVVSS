@@ -1,9 +1,6 @@
 package tests;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import tasks.model.ModelException;
 import tasks.model.Task;
 
@@ -19,6 +16,16 @@ class TasksServiceTest {
 
     private Date startDate1;
     private Date endDate1;
+
+    @BeforeAll
+    public static void startTest(){
+        System.out.println("Start TasksServiceTest <======");
+    }
+
+    @AfterAll
+    public static void stopTest(){
+        System.out.println("Stop TasksServiceTest ======>");
+    }
 
     @BeforeEach
     public void initDate() {
@@ -88,6 +95,14 @@ class TasksServiceTest {
         assert task.getRepeatInterval() == 60;
     }
 
+    @Test
+    public void TC05_BVA_nonValid(){
+        int interval = 0;
+        Exception exception = assertThrows(ModelException.class, () -> {
+            Task task = new Task(null, startDate, endDate, interval);
+        });
+        assert exception.getMessage().contains("title");
+    }
 
 
 }
