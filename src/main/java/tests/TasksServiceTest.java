@@ -11,6 +11,9 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@Tag("F01_TESTS")
+@DisplayName("F01 TasksService tests")
 class TasksServiceTest {
 
     private Date startDate;
@@ -130,10 +133,20 @@ class TasksServiceTest {
     }
 
     @Test
+    @Timeout(5)
     public void TCO7_BVA_nonValid() {
         Exception exception = assertThrows(ModelException.class, () -> {
             tasksService.add(null, startDate, endDate, -1, true);
         });
         assert exception.getMessage().contains("title");
+    }
+
+    @Disabled("Disabled until bug #42 has been resolved")
+    @Test
+    void TC_SKIPPED() {
+        Exception exception = assertThrows(ModelException.class, () -> {
+            tasksService.add(null, startDate, endDate, 345, false);
+        });
+        assert exception.getMessage().contains("haha");
     }
 }
