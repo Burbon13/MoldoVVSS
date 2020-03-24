@@ -9,3 +9,4 @@
 ## Lab 02
 
 - [Lab02_BBT_TCs](https://drive.google.com/file/d/1b70gI8qLrFKeyHbnAhBr_Rwuy1n4tcbX/view?usp=sharing)
+- [Prj236_test_spec-MOLDO-Labb02](https://drive.google.com/file/d/1LDI8fdIKcEjh67am7B_JTh65dhnlqA3E/view?usp=sharing)

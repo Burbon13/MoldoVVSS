@@ -73,7 +73,7 @@ class TasksServiceTest {
     }
 
     @Test
-    public void TC04_ECP_nonValid() {
+    public void TC05_ECP_nonValid() {
         int interval = 0;
         Exception exception = assertThrows(ModelException.class, () -> {
             //Task task = new Task("Alergat", startDate, endDate, interval);
@@ -83,7 +83,7 @@ class TasksServiceTest {
     }
 
     @Test
-    public void TC03_ECP_valid() {
+    public void TC01_ECP_valid_2() {
         int interval = 20;
         //Task task = new Task("Munca", startDate1, endDate1, interval);
         tasksService.add("Munca", startDate1, endDate1, interval, true);
