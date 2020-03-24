@@ -22,12 +22,12 @@ class TasksServiceTest {
     private TasksService tasksService;
 
     @BeforeAll
-    public static void startTest(){
+    public static void startTest() {
         System.out.println("Start TasksServiceTest <======");
     }
 
     @AfterAll
-    public static void stopTest(){
+    public static void stopTest() {
         System.out.println("Stop TasksServiceTest ======>");
     }
 
@@ -44,8 +44,8 @@ class TasksServiceTest {
         calendar.set(2021, 3, 25, 8, 20, 0);
         endDate1 = calendar.getTime();
 
-        ArrayTaskList list=new ArrayTaskList();
-        tasksService=new TasksService(list);
+        ArrayTaskList list = new ArrayTaskList();
+        tasksService = new TasksService(list);
     }
 
     @AfterEach
@@ -54,14 +54,14 @@ class TasksServiceTest {
         startDate1 = null;
         endDate = null;
         endDate1 = null;
-        tasksService=null;
+        tasksService = null;
     }
 
     @Test
     public void TC01_ECP_valid_1() {
         int interval = 120;
         //Task task = new Task("Alergat", startDate, endDate, interval);
-        tasksService.add("Alergat", startDate, endDate, interval,true);
+        tasksService.add("Alergat", startDate, endDate, interval, true);
         assert tasksService.getObservableList().get(0).getTitle().length() > 0;
         assert tasksService.getObservableList().get(0).getTitle().length() <= 255;
         assert tasksService.getObservableList().get(0).getRepeatInterval() > 0;
@@ -74,7 +74,7 @@ class TasksServiceTest {
         int interval = 0;
         Exception exception = assertThrows(ModelException.class, () -> {
             //Task task = new Task("Alergat", startDate, endDate, interval);
-            tasksService.add("Alergat", startDate, endDate, interval,true);
+            tasksService.add("Alergat", startDate, endDate, interval, true);
         });
         assert exception.getMessage().contains("interval");
     }
@@ -83,7 +83,7 @@ class TasksServiceTest {
     public void TC03_ECP_valid() {
         int interval = 20;
         //Task task = new Task("Munca", startDate1, endDate1, interval);
-        tasksService.add("Munca", startDate1, endDate1, interval,true);
+        tasksService.add("Munca", startDate1, endDate1, interval, true);
         assert tasksService.getObservableList().get(0).getTitle().length() > 0;
         assert tasksService.getObservableList().get(0).getTitle().length() <= 255;
         assert tasksService.getObservableList().get(0).getRepeatInterval() > 0;
@@ -95,7 +95,7 @@ class TasksServiceTest {
     public void TCO3_ECP_nonValid() {
         int interval = 20;
         Exception exception = assertThrows(ModelException.class, () -> {
-            tasksService.add("", startDate, endDate, interval,true);
+            tasksService.add("", startDate, endDate, interval, true);
         });
         assert exception.getMessage().contains("title");
     }
@@ -103,20 +103,37 @@ class TasksServiceTest {
     @Test
     public void TC03_BVA_valid() {
         int interval = 60;
-        tasksService.add("M", startDate1, endDate1, interval,true);
+        tasksService.add("M", startDate1, endDate1, interval, true);
         assert tasksService.getObservableList().get(0).getTitle().equals("M");
         assert tasksService.getObservableList().get(0).getRepeatInterval() == 60;
         tasksService.delete(tasksService.getObservableList().get(0));
     }
 
     @Test
-    public void TC05_BVA_nonValid(){
+    public void TC05_BVA_nonValid() {
         int interval = 0;
         Exception exception = assertThrows(ModelException.class, () -> {
-           tasksService.add(null, startDate, endDate, interval,true);
+            tasksService.add(null, startDate, endDate, interval, true);
         });
         assert exception.getMessage().contains("title");
     }
 
 
+    @Test
+    public void TC04_BVA_valid() {
+        int interval = 60;
+        String title = new String(new char[254]).replace("\0", "A");
+        tasksService.add(title, startDate1, endDate1, interval, true);
+        assert tasksService.getObservableList().get(0).getTitle().equals(title);
+        assert tasksService.getObservableList().get(0).getRepeatInterval() == 60;
+        tasksService.delete(tasksService.getObservableList().get(0));
+    }
+
+    @Test
+    public void TCO7_BVA_nonValid() {
+        Exception exception = assertThrows(ModelException.class, () -> {
+            tasksService.add(null, startDate, endDate, -1, true);
+        });
+        assert exception.getMessage().contains("title");
+    }
 }
