@@ -22,15 +22,25 @@ public class TasksOperations {
         ArrayList<Task> incomingTasks = new ArrayList<>();
         for (Task t : tasks) {
             Date nextTime = t.getTime();
-            //Date nextTime = t.nextTimeAfter(start);
-            //if (nextTime != null && (nextTime.before(end) || nextTime.equals(end))) {
-            if (nextTime != null && nextTime.before(end) && nextTime.after(start)){
-                incomingTasks.add(t);
-                log.info(t.getTitle());
+            if (nextTime != null) {
+                if (nextTime.before(end)) {
+                    if (nextTime.after(start)) {
+                        incomingTasks.add(t);
+                        log.info(t.getTitle());
+                    }
+                }
             }
         }
         return incomingTasks;
     }
+
+
+    //Date nextTime = t.nextTimeAfter(start);
+    // if (nextTime != null && (nextTime.before(end) || nextTime.equals(end))) {
+//            if (nextTime != null && nextTime.before(end) && nextTime.after(start)){
+//                incomingTasks.add(t);
+//                log.info(t.getTitle());
+//            }
 
     public SortedMap<Date, Set<Task>> calendar(Date start, Date end) {
         Iterable<Task> incomingTasks = incoming(start, end);
