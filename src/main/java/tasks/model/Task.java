@@ -97,6 +97,10 @@ public class Task implements Serializable {
         return startTime;
     }
 
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
     public Date getEndTime() {
         return endTime;
     }
