@@ -80,15 +80,19 @@ class TasksOperationsTest {
     }
 
     @Test
-    public void F02_TC04_WHEN_NoTaskInInterval_THEN_NoTasksReturner() {
+    public void F02_TC04_WHEN_NoTaskInInterval_THEN_NoTasksReturned() {
         task2.setStartTime(null);
+        calendar.set(2020, 5, 20, 8, 20, 0);
+        startDate = calendar.getTime();
+        calendar.set(2020, 5, 22, 8, 20, 0);
+        stopDate = calendar.getTime();
         all.add(task1);
         all.add(task2);
         tasks = FXCollections.observableArrayList(all);
         tasksOperations = new TasksOperations(tasks);
         Iterable<Task> result = tasksOperations.incoming(startDate, stopDate);
         result.forEach(x -> {
-            assert !x.getTitle().equals("Task1") && !x.getTitle().equals("Task2");
+            assert false;
         });
         assert true;
     }

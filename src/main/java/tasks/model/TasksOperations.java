@@ -23,8 +23,8 @@ public class TasksOperations {
         for (Task t : tasks) {
             Date nextTime = t.getTime();
             if (nextTime != null) {
-                if (nextTime.before(end)) {
-                    if (nextTime.after(start)) {
+                if (!nextTime.after(end)) {
+                    if (!nextTime.before(start)) {
                         incomingTasks.add(t);
                         log.info(t.getTitle());
                     }
