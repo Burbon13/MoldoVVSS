@@ -1,4 +1,4 @@
-package tests;
+package tasks;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
