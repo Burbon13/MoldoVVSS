@@ -1,74 +1,62 @@
 package tasks.services;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import tasks.model.ArrayTaskList;
+import tasks.model.CapacityWrapper;
 import tasks.model.Task;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TasksServiceTestWithMockAnnotations {
+
+class TaskServiceIntegrationTestStep2 {
+    private static final int CAPACITY = 20;
 
     @Mock
-    private ArrayTaskList taskList;
+    CapacityWrapper capacityWrapper;
 
-    @InjectMocks
+    private ArrayTaskList arrayTaskList;
     private TasksService tasksService;
-
     private Date startDate, endDate;
-    private Calendar calendar;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        Mockito.when(capacityWrapper.getCapacity()).thenReturn(CAPACITY);
+        arrayTaskList = new ArrayTaskList(capacityWrapper);
+        tasksService = new TasksService(arrayTaskList);
 
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.set(2020, 3, 19, 8, 20, 0);
         startDate = calendar.getTime();
         calendar.set(2020, 3, 25, 8, 20, 0);
         endDate = calendar.getTime();
     }
 
-    @AfterEach
-    void tearDown() {
-        calendar = null;
-        startDate = null;
-        endDate = null;
-    }
-
     @Test
     public void getSizeTaskServiceTest() {
         Task task1 = new Task("Go to the gym", startDate, endDate, 120000);
-        Task task2 = new Task("Buy drinks", startDate, endDate, 5000);
-
-        Mockito.doNothing().when(taskList).add(task1);
-        Mockito.doNothing().when(taskList).add(task2);
-        Mockito.verify(taskList, Mockito.never()).add(task2);
 
         tasksService.add(task1.getTitle(), task1.getStartTime(), task1.getEndTime(), task1.getRepeatInterval(), false);
-        tasksService.delete(task1);
 
-        assertEquals(taskList.getAll().size(), 0);
+        assertEquals(1, arrayTaskList.getAll().size());
     }
 
     @Test
     public void getAllTaskServiceTest() {
         Task task1 = new Task("Go to the gym", startDate, endDate, 120000);
-        Mockito.doNothing().when(taskList).add(task1);
 
-        tasksService.add(task1.getTitle(), task1.getStartTime(), task1.getEndTime(), task1.getRepeatInterval(), false);
+        tasksService.add(task1.getTitle(), task1.getStartTime(), task1.getEndTime(), task1.getRepeatInterval(), true);
         tasksService.delete(task1);
 
         assert true;
-        assertEquals(taskList.getAll(), Collections.emptyList());
+        assertEquals(Collections.emptyList(), arrayTaskList.getAll());
     }
 }

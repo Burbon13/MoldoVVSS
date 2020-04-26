@@ -48,6 +48,11 @@ public class ArrayTaskList extends TaskList {
         this.tasks = new Task[currentCapacity];
     }
 
+    public ArrayTaskList(CapacityWrapper capacityWrapper) {
+        currentCapacity = capacityWrapper.getCapacity();
+        this.tasks = new Task[currentCapacity];
+    }
+
     @Override
     public Iterator<Task> iterator() {
         return new ArrayTaskListIterator();
