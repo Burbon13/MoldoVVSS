@@ -15,5 +15,9 @@
 ## Lab 03
 
 - [Lab03_WWT_Tcs](https://drive.google.com/file/d/10LWciUobH2Tsf8RuP1H3mLaQVefn8NGL/view?usp=sharing)
-- [Prj236_test_spec_MODLO_Lab03](https://drive.google.com/file/d/1Nb_YCR1363HZgwL6KmfMkdTAq_Ndk5Kt/view?usp=sharing)
+- [Prj236_test_spec_MOLDO_Lab03](https://drive.google.com/file/d/1Nb_YCR1363HZgwL6KmfMkdTAq_Ndk5Kt/view?usp=sharing)
 - [Coverage Doc] -> Docs folder
+
+## Lab 04
+
+- [Prj236_test_spec_MOLDO_Lab04](https://drive.google.com/file/d/1pvtQZSNntxylU-zpPu7zIMZQbeT39PwV/view?usp=sharing)
