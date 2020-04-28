@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
+import tasks.model.ArrayTaskList;
+import tasks.model.CapacityWrapper;
 import tasks.model.Task;
 import tasks.model.TaskList;
 
@@ -17,14 +19,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class TaskListTestWithMockConstructor {
+    private static final int CAPACITY = 20;
 
-    private TaskList taskList;
+    private ArrayTaskList arrayTaskList;
     private Date startDate, endDate;
     private Calendar calendar;
 
+    private CapacityWrapper capacityWrapper;
+
     @BeforeEach
     void setUp() {
-        taskList = mock(TaskList.class);
+        capacityWrapper = mock(CapacityWrapper.class);
+        Mockito.when(capacityWrapper.getCapacity()).thenReturn(CAPACITY);
+        arrayTaskList = new ArrayTaskList(capacityWrapper);
 
         calendar = Calendar.getInstance();
         calendar.set(2020, 3, 19, 8, 20, 0);
@@ -43,12 +50,11 @@ class TaskListTestWithMockConstructor {
     @Test
     public void getAllTasksTest() {
         Task task1 = new Task("Read a book", startDate, endDate, 3600);
-        Mockito.when(taskList.getAll()).thenReturn(Arrays.asList(task1));
-        Mockito.verify(taskList, never()).getAll();
+        arrayTaskList.add(task1);
+        Mockito.verify(capacityWrapper, times(1)).getCapacity();
 
         assert true;
-        assertEquals(taskList.getAll().size(), 1);
-        Mockito.verify(taskList, times(1)).getAll();
+        assertEquals(arrayTaskList.getAll().size(), 1);
     }
 
     @Test
@@ -56,21 +62,13 @@ class TaskListTestWithMockConstructor {
         Task task1 = new Task("Read a book", startDate, endDate, 3600);
         Task task2 = new Task("Watch a good movie", startDate);
 
-        Mockito.doAnswer((Answer<Void>) invocation -> {
-            Object[] arguments = invocation.getArguments();
-            if (arguments != null && arguments.length == 1 && arguments[0] != null) {
-                Task t = (Task) arguments[0];
-                assertEquals(t.getRepeatInterval(), 3600);
-                assertEquals(t.getTitle(), "Read a book");
-            }
-            return null;
-        }).when(taskList).add(task1);
+        arrayTaskList.add(task1);
+        assertEquals(arrayTaskList.getAll().size(), 1);
 
-        taskList.add(task1);
-        taskList.add(task2);
+        arrayTaskList.add(task2);
+        assertEquals(arrayTaskList.getAll().size(), 2);
 
-        Mockito.verify(taskList, times(1)).add(task1);
-        Mockito.verify(taskList, times(1)).add(task2);
+        Mockito.verify(capacityWrapper, times(1)).getCapacity();
         assert true;
     }
 }
